@@ -5,6 +5,6 @@ meta_desc: Pulumi's platform lets you build cloud resources in familiar language
 layout: why-pulumi
 menu:
     header:
-        weight: 5
+        weight: 6
         identifier: why
 ---
