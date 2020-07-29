@@ -1,5 +1,6 @@
 ---
 title: "{{ replace .Name "-" " " | title }}"
+layout: module
 
 # The date represents the date the course was created. Posts with future dates are visible
 # in development, but excluded from production builds. Use the time and timezone-offset
@@ -24,6 +25,11 @@ meta_desc:
 # A placeholder image representing the recommended format, dimensions and aspect
 # ratio has been provided for reference.
 meta_image: meta.png
+
+youll_learn:
+    - Stuff
+    - Things
+    - Whatnot
 
 # At least one author is required. The values in this list correspond with the `id`
 # properties of the team member files at /data/team/team. Create a file for yourself

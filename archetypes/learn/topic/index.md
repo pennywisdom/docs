@@ -1,5 +1,6 @@
 ---
 title: "{{ replace .Name "-" " " | title }}"
+layout: topic
 
 # The date represents the date the course was created. Posts with future dates are visible
 # in development, but excluded from production builds. Use the time and timezone-offset

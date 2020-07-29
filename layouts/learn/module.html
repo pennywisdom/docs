@@ -1,0 +1,64 @@
+{{ define "main" }}
+    <header class="container mx-auto py-8 border-b border-gray-300 max-w-3xl px-4">
+        <h1>{{ .Title }}</h1>
+        {{ if .Params.description }}
+            <p class="text-xl text-gray-600">
+                {{ .Params.description }}
+            </p>
+        {{ end }}
+        {{ if .Params.meta_image }}
+            <img class="rounded" src="{{ (.Resources.GetMatch .Params.meta_image).RelPermalink }}" alt="{{ .Title }}">
+        {{ end }}
+
+    </header>
+    <section class="container mx-auto max-w-3xl py-8 px-4">
+        {{ .Content }}
+    </section>
+    <section class="container mx-auto max-w-3xl px-4">
+        <div class="md:flex">
+            <div class="md:w-1/2">
+                <h4>What you'll learn:</h4>
+                <ul>
+                    {{ range .Params.youll_learn }}
+                        <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+            <div class="md:w-1/2">
+                <div class="rounded bg-gray-100 py-4 px-6">
+                    <p>Some additional metadata:</p>
+                    <p>
+                        Things, and stuff, and how long this will
+                        take, etc. We'll fill it all out, promise.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container mx-auto max-w-3xl py-8 px-4">
+        <h3 class="mb-4">{{ .Title }} Topics</h3>
+        <ul class="border rounded border-gray-300 p-0 mb-12">
+            {{ $thisModule := . }}
+
+            {{ $allModules := slice }}
+            {{ $allTopics := slice }}
+            {{ $learnPages := where (where .Site.Pages "Section" "learn") ".Kind" "page" }}
+            {{ range $learnPages }}
+                {{ if eq (len (split .Path "/")) 3 }}
+                    {{ $allModules = $allModules | append .Page }}
+                {{ else }}
+                    {{ $allTopics = $allTopics | append .Page }}
+                {{ end }}
+            {{ end }}
+
+            {{ range $allTopics }}
+                {{ $topic := . }}
+                {{ if hasPrefix $topic.File.Dir $thisModule.File.Dir }}
+                    <li class="list-none px-4 p-2">
+                        <a href="{{ $topic.RelPermalink }}">{{ $topic.Title }}</a>
+                    </li>
+                {{ end }}
+            {{ end }}
+        </ul>
+    </section>
+{{ end }}

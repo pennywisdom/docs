@@ -1,12 +1,24 @@
 {{ define "main" }}
-    <header class="container mx-auto py-8 border-b border-gray-300 text-center max-w-2xl px-4">
+    <header class="container mx-auto py-8 border-b border-gray-300 max-w-3xl px-4">
         <h1>{{ .Title }}</h1>
-
+        {{ if .Params.meta_image }}
+            <a href="{{ .RelPermalink }}">
+                <img
+                    class="rounded"
+                    src="{{ (.Resources.GetMatch .Params.meta_image).RelPermalink }}"
+                alt="{{ .Title }}">
+            </a>
+        {{ end }}
         {{ if .Params.description }}
             <p class="text-xl text-gray-600">
                 {{ .Params.description }}
             </p>
         {{ end }}
+
+        Part of
+        {{ $path := (split .Path "/" ) }}
+        {{ $module := .GetPage (path.Join (slice | append (index $path 0) (index $path 1)) "/")  }}
+        <a class="text-blue-500" href="{{ $module.RelPermalink }}">{{ $module.Title }}</a>
     </header>
     <section class="container mx-auto max-w-3xl py-8 px-4">
         {{ .Content }}
@@ -29,5 +41,10 @@
                 {{ end }}
             {{ end }}
         </ul>
+    </section>
+    <section class="container mx-auto max-w-3xl mb-16">
+        {{ if .NextInSection }}
+            <a class="btn btn-secondary" href="{{ .NextInSection.RelPermalink }}">Next up: {{ .NextInSection.Title }} &rarr;</a>
+        {{ end }}
     </section>
 {{ end }}
